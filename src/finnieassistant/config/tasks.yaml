@@ -1,0 +1,87 @@
+coordinate_request:
+  description: >
+    Analyze the user's query: "{query}".
+    Your goal is to semantically understand if the user wants to:
+    1. Perform technical or news analysis on a specific company (Route: STOCK).
+    2. Review risk/diversification of their own investment file (Route: PORTFOLIO).
+    3. Learn a financial concept through analogies (Route: COACH).
+    
+    If the query is too vague (e.g., just "Hi" or "Help me"), 
+    identify that more information is needed (Route: REFINE).
+  expected_output: >
+    A single word representing the route: 'STOCK', 'PORTFOLIO', 'COACH', or 'REFINE'.
+
+analyze_stock:
+  description: >
+    Conduct a deep-dive professional analysis for the company mentioned in: "{query}".
+    
+    Step 1: Map the company to its official ticker (adding .NS/.BO for Indian stocks).
+    Step 2: Extract "The Essentials" from Yahoo Finance: P/E Ratio, Market Cap, 
+            Dividend Yield, and 52-week High/Low.
+    Step 3: Perform a "Narrative Sweep" using Tavily to find major catalysts: 
+            earnings beats/misses, M&A activity, or regulatory hurdles.
+    Step 4: Synthesize the 'Quant' (numbers) and 'Qual' (news) into a 
+            high-conviction investment summary.
+  expected_output: >
+    A world-class Financial Intelligence Report formatted in Markdown:
+
+    # [Company Name] ([Ticker]) - Executive Intelligence Report
+    **Market Rating:** [Bullish | Bearish | Neutral] 
+    **Last Price:** [Price] | **Target Context:** [52W Range]
+
+    ---
+    ### 📊 Fundamental Snapshot (The "Quant")
+    * **Valuation:** [Compare P/E to sector average if possible]
+    * **Stability:** [Market Cap & Liquidity analysis]
+    * **Efficiency:** [Key margin or yield data]
+
+    ### 📰 Market Narrative & Catalysts (The "Qual")
+    * **Top News:** [Briefly summarize 2-3 major recent headlines]
+    * **Sentiment Pulse:** [Is the market fearful or greedy regarding this stock?]
+
+    ### 🔍 Strategist's "Deep Dive"
+    [A 2-paragraph expert synthesis. Connect the financial data to the news. 
+    Explain *why* the stock is moving the way it is.]
+
+    ### ⚠️ Risk Factors
+    * [List 2 specific risks identified from the news or data]
+
+    **"The Bottom Line":** A final one-sentence high-conviction take.
+
+analyze_portfolio:
+  description: >
+    Analyze the uploaded portfolio file.
+    Identify asset mix, concentration risk, and diversification.
+  expected_output: >
+    Portfolio summary, risk classification, and improvement suggestions.
+
+teach_concept:
+  description: >
+    Act as a "Financial Jargon Buster." Your goal is to take the complex investing 
+    concept: "{query}" and translate it into a mental model a 12-year-old could grasp.
+
+    Follow this logical flow:
+    1. The "Big Idea": Explain the concept in one sentence using a relatable analogy 
+       (e.g., comparing dividends to "rent collected from a house").
+    2. The "Simple Deep Dive": Break down how it works without using any 
+       financial industry terms unless you define them immediately in brackets.
+    3. Contrastive Learning: Provide specific "In Action" vs "Not This" scenarios.
+  
+  expected_output: >
+    A structured educational guide formatted in Markdown:
+    
+    ## [Concept Name] 
+    **The 10-Second Summary:** [One sentence analogy]
+    
+    **How it Works:** [2-3 short paragraphs of simple explanation]
+    
+    ---
+    ### 🟢 When it’s a Good Sign (Positive Examples)
+    * **Example 1:** [Lucid scenario showing the concept working in favor of the investor]
+    * **Example 2:** [Scenario showing growth or stability]
+    
+    ### 🔴 When to be Careful (Negative Examples)
+    * **Example 1:** [Lucid scenario where this concept indicates a trap or a loss]
+    * **Example 2:** [Scenario showing misuse of the metric/concept]
+    
+    **The "Teacher's Tip":** A final nugget of wisdom to help the user remember this forever.
