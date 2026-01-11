@@ -26,6 +26,11 @@ crewai install
 - Modify `src/finnieassistant/config/tasks.yaml` to define your tasks
 - Modify `src/finnieassistant/crew.py` to add your own logic, tools and specific args
 - Modify `src/finnieassistant/main.py` to add custom inputs for your agents and tasks
+- create your .env files with relevant keys
+TAVILY_API_KEY =
+OPENROUTER_API_KEY = 
+OPENROUTER_BASE_URL = 
+OPENROUTER_MODEL_NAME =
 
 ## Running the Project
 
